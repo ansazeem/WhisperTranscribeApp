@@ -9,7 +9,7 @@ class Transcriber {
     }
 
     func transcribe(audioURL: URL, language: String?) async throws -> String {
-        let options = DecodingOptions(task: .transcribe, language: language)
+        let options = DecodingOptions(task: .transcribe, language: "ur")
         print("[DEBUG] Transcribing: \(audioURL.lastPathComponent)")
 
         let start = CFAbsoluteTimeGetCurrent()
@@ -18,7 +18,6 @@ class Transcriber {
         print("[BENCHMARK] Transcription time: \(String(format: "%.2f", duration))s")
 
         let combinedText = result.map { $0.text }.joined(separator: " ")
-        print("[DEBUG] Transcription result: \(combinedText)")
         return combinedText
     }
 }
