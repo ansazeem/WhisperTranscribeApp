@@ -5,8 +5,11 @@ import WhisperKit
 class ContentViewModel: ObservableObject {
     @Published var isModelLoaded = false
     @Published var isLoadingModel = false
+    @Published var selectedModel = "small" // Default selection
     var whisper: WhisperKit?
     
+    let availableModels = ["tiny", "base", "small", "medium", "large"]
+
     func loadModel() async {
         isLoadingModel = true
         
@@ -18,20 +21,19 @@ class ContentViewModel: ObservableObject {
         )
         
         do {
-            print("[DEBUG] Loading WhisperKit...")
+            print("[DEBUG] Loading WhisperKit with model: \(selectedModel)")
             
-            // Change folderName to your actual model folder in the app bundle
-            let folderName = "openai_whisper-medium"
+            // Model folder in bundle
+            let folderName = "openai_whisper-\(selectedModel)"
             guard let modelFolderURL = Bundle.main.url(forResource: folderName, withExtension: nil) else {
-                fatalError("Model folder not found in bundle")
+                fatalError("Model folder '\(folderName)' not found in bundle")
             }
             
             let config = WhisperKitConfig(
-                model: "small",
+                model: selectedModel,
                 modelFolder: modelFolderURL.path,
                 computeOptions: computeOptions,
-                verbose: true,
-                logLevel: .debug,
+                verbose: false,
                 download: false
             )
             
