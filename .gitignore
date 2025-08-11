@@ -1,0 +1,26 @@
+# Ignore Whisper models
+openai_whisper-*/
+tokenizer/
+*.mlmodelc
+
+# Xcode build products & user settings
+DerivedData/
+build/
+*.xcuserdatad/
+*.xcscmblueprint
+*.xcworkspace/xcuserdata
+
+# Audio/temp files
+*.wav
+*.mp3
+# Ignore model folders
+/openai_whisper-*/
+/*.mlmodelc
+
+# General Xcode ignores
+DerivedData/
+build/
+*.xcworkspace
+*.xcuserstate
+*.xcuserdata
+*.DS_Store
