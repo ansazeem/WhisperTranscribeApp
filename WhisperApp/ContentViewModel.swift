@@ -45,7 +45,9 @@ class ContentViewModel: ObservableObject {
             
             print("[BENCHMARK] Model load time: \(String(format: "%.2f", duration))s")
             self.whisper = whisperKit
+           
             self.isModelLoaded = true
+            
             
         } catch {
             print("[DEBUG] Failed to load model: \(error)")
