@@ -13,7 +13,7 @@ class BenchmarkRunner {
     let computeOptions = ModelComputeOptions(
         melCompute: .cpuAndGPU,
         audioEncoderCompute: .cpuAndGPU,
-        textDecoderCompute: .cpuAndGPU,
+        textDecoderCompute: .cpuAndNeuralEngine,
         prefillCompute: .cpuOnly
     )
     let audioURL: URL

@@ -14,9 +14,9 @@ class ContentViewModel: ObservableObject {
         isLoadingModel = true
         
         let computeOptions = ModelComputeOptions(
-            melCompute: .cpuAndGPU,
-            audioEncoderCompute: .cpuAndGPU,
-            textDecoderCompute: .cpuAndGPU,
+            melCompute: .cpuAndNeuralEngine,
+            audioEncoderCompute: .cpuAndNeuralEngine,
+            textDecoderCompute: .cpuAndNeuralEngine,
             prefillCompute: .cpuOnly
         )
         
@@ -34,16 +34,22 @@ class ContentViewModel: ObservableObject {
                 modelFolder: modelFolderURL.path,
                 computeOptions: computeOptions,
                 verbose: false,
+                prewarm: true,
                 download: false
+                
             )
             
-            let whisperKit = try await WhisperKit(config)
-            
             let startTime = CFAbsoluteTimeGetCurrent()
+            let whisperKit = try await WhisperKit(config)
+            let afterInitTime = CFAbsoluteTimeGetCurrent()
+
             try await whisperKit.loadModels()
-            let duration = CFAbsoluteTimeGetCurrent() - startTime
-            
-            print("[BENCHMARK] Model load time: \(String(format: "%.2f", duration))s")
+            let afterLoadTime = CFAbsoluteTimeGetCurrent()
+
+            print("[BENCHMARK] Init time: \(String(format: "%.2f", afterInitTime - startTime))s")
+            print("[BENCHMARK] LoadModels time: \(String(format: "%.2f", afterLoadTime - afterInitTime))s")
+            print("[BENCHMARK] Total model loading time: \(String(format: "%.2f", afterLoadTime - startTime))s")
+
             self.whisper = whisperKit
            
             self.isModelLoaded = true
